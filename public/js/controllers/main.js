@@ -9,6 +9,18 @@ angular.module('todoController', ['ngMaterial'])
             {user:2, name: "stem"}
         ];
 		$scope.taskForm = {};
+
+		$scope.moveRight = function (todoId) {
+		    console.log('Move item with id right :' + todoId);
+        };
+
+		$scope.moveUp = function (todoId) {
+            console.log('Move item up id: ' + todoId);
+        };
+        $scope.moveDown = function (todoId) {
+            console.log('Move item down id: ' + todoId);
+        };
+
 		$scope.getUserName = function (userId) {
             for (var i in $scope.users) {
                 if ($scope.users[i].user+"" === userId) {
