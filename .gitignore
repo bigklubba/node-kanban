@@ -6,6 +6,8 @@ lib-cov
 *.out
 *.pid
 *.gz
+*.iml
+database.js
 
 pids
 logs
