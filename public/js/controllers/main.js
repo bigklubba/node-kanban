@@ -10,6 +10,12 @@ angular.module('todoController', ['ngMaterial'])
         ];
 		$scope.taskForm = {};
 
+		$scope.tabs = [
+            {label: "Backlog", data: $scope.todos},
+            {label: "Ongoing", data: []},
+            {label: "Done", data: []}
+        ];
+
 		$scope.moveRight = function (todoId) {
 		    console.log('Move item with id right :' + todoId);
         };
@@ -54,6 +60,7 @@ angular.module('todoController', ['ngMaterial'])
 		Todos.get()
 			.success(function(data) {
 				$scope.todos = data;
+                $scope.tabs[0].data = data;
 				$scope.loading = false;
 			});
 
@@ -74,6 +81,7 @@ angular.module('todoController', ['ngMaterial'])
                         $scope.loading = false;
                         $scope.taskForm = {}; // clear the form so our user is ready to enter another
                         $scope.todos = data; // assign our new list of todos
+                        $scope.tabs[0].data = data;
                     });
             }
         };
@@ -87,6 +95,7 @@ angular.module('todoController', ['ngMaterial'])
                         $scope.loading = false;
                         $scope.taskForm = {};
                         $scope.todos = data;
+                        $scope.tabs[0].data = data;
                     });
             }
         };
@@ -101,6 +110,7 @@ angular.module('todoController', ['ngMaterial'])
 				.success(function(data) {
 					$scope.loading = false;
 					$scope.todos = data; // assign our new list of todos
+                    $scope.tabs[0].data = data;
 				});
 		};
 
