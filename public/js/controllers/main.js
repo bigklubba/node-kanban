@@ -11,13 +11,18 @@ angular.module('todoController', ['ngMaterial'])
 		$scope.taskForm = {};
 
 		$scope.tabs = [
-            {label: "Backlog", data: $scope.todos},
-            {label: "Ongoing", data: []},
-            {label: "Done", data: []}
+            {label: "Backlog", data: $scope.todos, next_disabled: false},
+            {label: "Ongoing", data: [], next_disabled: false},
+            {label: "Done", data: [], next_disabled: true}
         ];
 
 		$scope.moveRight = function (todoId) {
 		    console.log('Move item with id right :' + todoId);
+				Todos.nextState(todoId)
+                    .success(function(data) {
+                    $scope.loading = false;
+                    updateTabData(data);
+                });
         };
 
 		$scope.moveUp = function (todoId) {
@@ -59,8 +64,7 @@ angular.module('todoController', ['ngMaterial'])
 		// use the service to get all the todos
 		Todos.get()
 			.success(function(data) {
-				$scope.todos = data;
-                $scope.tabs[0].data = data;
+                updateTabData(data);
 				$scope.loading = false;
 			});
 
@@ -80,8 +84,7 @@ angular.module('todoController', ['ngMaterial'])
                     .success(function(data) {
                         $scope.loading = false;
                         $scope.taskForm = {}; // clear the form so our user is ready to enter another
-                        $scope.todos = data; // assign our new list of todos
-                        $scope.tabs[0].data = data;
+                        updateTabData(data);
                     });
             }
         };
@@ -94,8 +97,7 @@ angular.module('todoController', ['ngMaterial'])
                     .success(function (data) {
                         $scope.loading = false;
                         $scope.taskForm = {};
-                        $scope.todos = data;
-                        $scope.tabs[0].data = data;
+                        updateTabData(data);
                     });
             }
         };
@@ -109,10 +111,15 @@ angular.module('todoController', ['ngMaterial'])
 				// if successful creation, call our get function to get all the new todos
 				.success(function(data) {
 					$scope.loading = false;
-					$scope.todos = data; // assign our new list of todos
-                    $scope.tabs[0].data = data;
+                    updateTabData(data);
 				});
 		};
+
+		function updateTabData(data) {
+            for (var i = 0; i < data.length; i++) {
+                $scope.tabs[i].data = data[i];
+            }
+        }
 
         function DialogController($scope, $mdDialog) {
             $scope.hide = function() {

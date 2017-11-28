@@ -8,5 +8,9 @@ module.exports = mongoose.model('Todo', {
     user: {
         type: String,
         default: ''
+    },
+    state: {
+      type: Number,
+      default: 0
     }
 });

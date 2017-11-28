@@ -20,6 +20,10 @@ angular.module('todoService', [])
 			put : function(id, todoData) {
 				console.log('put');
 				return $http.put('/api/todos/' + id, todoData);
+			},
+			nextState : function(id) {
+				console.log('nextState '+id);
+				return $http.put('/api/todos/next_state/' + id);
 			}
 		}
 	}]);

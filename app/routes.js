@@ -7,8 +7,12 @@ function getTodos(res) {
         if (err) {
             res.send(err);
         }
-
-        res.json(todos); // return all todos in JSON format
+        var mappedTodos = [[],[],[]];
+        for (var i in todos) {
+            mappedTodos[todos[i].state].push(todos[i]);
+        }
+        res.json(mappedTodos); // return all todos in JSON format
+        //res.json(todos); // return all todos in JSON format
     });
 }
 
@@ -30,6 +34,16 @@ module.exports = function (app) {
             }
             res.json(todo);
         });
+    });
+
+    app.put('/api/todos/next_state/:todo_id', function(req, res) {
+      Todo.findOneAndUpdate({_id: req.params.todo_id}, {$inc: {'state' : 1}}, function(error) {
+        if (error) {
+          console.log('error');
+          res.send(error);
+        }
+        getTodos(res);
+      });
     });
 
     app.put('/api/todos/:todo_id', function(req, res) {
