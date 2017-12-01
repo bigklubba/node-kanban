@@ -36,8 +36,10 @@ module.exports = function (app) {
         });
     });
 
+    // move task into next state, only 3 steps at the moment
+    // Do not increment state if state is 2
     app.put('/api/todos/next_state/:todo_id', function(req, res) {
-      Todo.findOneAndUpdate({_id: req.params.todo_id}, {$inc: {'state' : 1}}, function(error) {
+      Todo.findOneAndUpdate({_id: req.params.todo_id, state: {$lt: 2}}, {$inc: {'state' : 1}}, function(error) {
         if (error) {
           console.log('error');
           res.send(error);
