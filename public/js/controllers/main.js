@@ -27,9 +27,20 @@ angular.module('todoController', ['ngMaterial'])
 
 		$scope.moveUp = function (todoId) {
             console.log('Move item up id: ' + todoId);
+						Todos.up(todoId)
+												.success(function(data) {
+												$scope.loading = false;
+												updateTabData(data);
+										});
         };
-        $scope.moveDown = function (todoId) {
+
+    $scope.moveDown = function (todoId) {
             console.log('Move item down id: ' + todoId);
+						Todos.down(todoId)
+												.success(function(data) {
+												$scope.loading = false;
+												updateTabData(data);
+										});
         };
 
 		$scope.getUserName = function (userId) {

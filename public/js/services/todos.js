@@ -24,6 +24,14 @@ angular.module('todoService', [])
 			nextState : function(id) {
 				console.log('nextState '+id);
 				return $http.put('/api/todos/next_state/' + id);
+			},
+			up : function(id) {
+				console.log('up:', id)
+				return $http.put('api/todos/up/' + id)
+			},
+			down : function(id) {
+				console.log('up:', id)
+				return $http.put('api/todos/down/' + id)
 			}
 		}
 	}]);
