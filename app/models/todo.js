@@ -12,13 +12,5 @@ module.exports = mongoose.model('Todo', {
     state: {
       type: Number,
       default: 0
-    },
-    next: {
-      type: String,
-      default:''
-    },
-    prev: {
-      type: String,
-      default:''
     }
 });

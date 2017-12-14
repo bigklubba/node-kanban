@@ -87,8 +87,6 @@ createTodo = function(text, user, res) {
     Todo.create({
       text: text,
       user: user,
-      next: '',
-      prev: '',
       done: false
     }, (error, createdTodo) => {
       if (error) {
