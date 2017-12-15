@@ -2,15 +2,18 @@
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
 <html>
+
 <head>
 	<!-- META -->
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Optimize mobile viewport -->
 
 	<title>Node/Kanban</title>
 
 	<!-- SCROLLS -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<!-- load bootstrap -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -25,15 +28,20 @@
 	<!-- Angular Material Library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
-	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
-	<script src="js/controllers/dialog_controllers.js"></script> <!-- load up the dialog controllers -->
-	<script src="js/services/todos.js"></script> <!-- load our todo service -->
-	<script src="js/core.js"></script> <!-- load our main application -->
+	<script src="js/controllers/main.js"></script>
+	<!-- load up our controller -->
+	<script src="js/controllers/dialog_controllers.js"></script>
+	<!-- load up the dialog controllers -->
+	<script src="js/services/todos.js"></script>
+	<!-- load our todo service -->
+	<script src="js/core.js"></script>
+	<!-- load our main application -->
 </head>
 <!-- SET THE CONTROLLER -->
+
 <body ng-app='scotchTodo'>
-<div ng-controller='mainController' layout="column" style="height:600px" ng-cloak>
-	<md-toolbar md-scroll-shrink ng-if="true">
+	<div ng-controller='mainController' layout="column" style="height:600px" ng-cloak>
+		<md-toolbar md-scroll-shrink ng-if="true">
 			<div class="md-toolbar-tools">
 				<md-truncate style="position: absolute; left: 13px; right: 170px; top: 13px; bottom: 13px;">Ongoing: {{ todos.length }}</md-truncate>
 				<span flex></span>
@@ -47,40 +55,41 @@
 			<md-tabs md-dynamic-height md-border-bottom>
 				<md-tab ng-repeat="tab in tabs" label="{{tab.label}}">
 					<md_content>
-					<md-list>
-						<md-list-item class="md-3-line" ng-repeat="todo in tab.data" ng-click="showNewDialog(todo._id)">
-							<div layout="column">
-								<md-button class="material-icons md-icon-button" ng-click="moveUp(todo._id)">keyboard_arrow_up</md-button>
-								<md-button class="material-icons md-icon-button" ng-click="moveDown(todo._id)">keyboard_arrow_down</md-button>
-							</div>
-							<div class="md-list-item-text" layout="column">
-								<h3>{{ todo.text }}</h3>
-								<h4>{{ getUserName(todo.user) }}</h4>
-							</div>
-							<div layout="column" layout-align="center end">
-								<md-fab-speed-dial md-direction="left" md-open="false" ng-class="'md-scale'" ng-cloak>
-									<md-fab-trigger>
-										<md-button aria-label="menu" class="material-icons md-icon-button">
-											more_horiz
-										</md-button>
-									</md-fab-trigger>
-									<md-fab-actions>
-										<md-button class="material-icons md-icon-button md-mini" aria-label="Delete" ng-click="deleteTodo(todo._id)">
-											delete
-										</md-button>
-									</md-fab-actions>
-								</md-fab-speed-dial>
-								<md-button class="material-icons md-icon-button" aria-label="Right" ng-click="moveRight(todo._id)" ng-disabled="tab.next_disabled">
-									navigate_next
-								</md-button>
-							</div>
-							<md-divider inset></md-divider>
-						</md-list-item>
-					</md-list>
+						<md-list>
+							<md-list-item class="md-3-line" ng-repeat="todo in tab.data" ng-click="showNewDialog(todo._id)">
+								<div layout="column">
+									<md-button class="material-icons md-icon-button" ng-click="moveUp(todo._id, todo.state)">keyboard_arrow_up</md-button>
+									<md-button class="material-icons md-icon-button" ng-click="moveDown(todo._id, todo.state)">keyboard_arrow_down</md-button>
+								</div>
+								<div class="md-list-item-text" layout="column">
+									<h3>{{ todo.text }}</h3>
+									<h4>{{ getUserName(todo.user) }}</h4>
+								</div>
+								<div layout="column" layout-align="center end">
+									<md-fab-speed-dial md-direction="left" md-open="false" ng-class="'md-scale'" ng-cloak>
+										<md-fab-trigger>
+											<md-button aria-label="menu" class="material-icons md-icon-button">
+												more_horiz
+											</md-button>
+										</md-fab-trigger>
+										<md-fab-actions>
+											<md-button class="material-icons md-icon-button md-mini" aria-label="Delete" ng-click="deleteTodo(todo._id)">
+												delete
+											</md-button>
+										</md-fab-actions>
+									</md-fab-speed-dial>
+									<md-button class="material-icons md-icon-button" aria-label="Right" ng-click="moveRight(todo._id)" ng-disabled="tab.next_disabled">
+										navigate_next
+									</md-button>
+								</div>
+								<md-divider inset></md-divider>
+							</md-list-item>
+						</md-list>
 					</md_content>
 				</md-tab>
 			</md-tabs>
 		</md-content>
-</div>
+	</div>
 </body>
+
 </html>

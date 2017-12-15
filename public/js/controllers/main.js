@@ -42,23 +42,25 @@ angular.module('todoController', ['ngMaterial'])
         });
     };
 
-    $scope.moveUp = function(todoId) {
+    $scope.moveUp = function(todoId, state) {
       console.log('Move item up id: ' + todoId);
       $scope.loading = true;
+      move(todoId, state, -1)
       Todos.up(todoId)
         .success(function(data) {
           $scope.loading = false;
-          updateTabData(data);
+          //updateTabData(data);
         });
     };
 
-    $scope.moveDown = function(todoId) {
+    $scope.moveDown = function(todoId, state) {
       console.log('Move item down id: ' + todoId);
       $scope.loading = true;
+      move(todoId, state, 1)
       Todos.down(todoId)
         .success(function(data) {
           $scope.loading = false;
-          updateTabData(data);
+          //updateTabData(data);
         });
     };
 
@@ -150,6 +152,16 @@ angular.module('todoController', ['ngMaterial'])
     function updateTabData(data) {
       for (var i = 0; i < data.length; i++) {
         $scope.tabs[i].data = data[i];
+      }
+    }
+
+    function move(todo_id, state, direction) {
+      let stateTodos = $scope.tabs[state].data
+      let todoIndex = stateTodos.findIndex(todo => todo._id == todo_id)
+      let newIndex = todoIndex + direction
+
+      if (newIndex >= 0 && newIndex < stateTodos.length) {
+        stateTodos.splice(todoIndex, 0, stateTodos.splice(todoIndex + direction, 1)[0])
       }
     }
 
